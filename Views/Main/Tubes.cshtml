@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "Tubes";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Tube Updates</title>
+    <style>
+        #map {
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+#overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+body {
+            background-image: url("https://static.vecteezy.com/system/resources/thumbnails/010/355/126/original/lens-flare-bright-afternoon-sun-with-lens-flare-lens-flare-transition-light-effect-lens-flare-effect-on-black-background-light-streaks-lights-optical-lens-flares-free-video.jpg");
+            background-size: cover;
+        }
+        .menu-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		}
+
+		.menu-banner {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -20%);
+		background-color: rgba(255, 255, 255, 0.5);
+		padding: 5px;
+		border-radius: 10px;
+		text-align: center;
+		font-family: 'Arial', sans-serif;
+		font-size: 20px;
+		color: #fff;
+		text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+		}
+        .fade-in {
+		opacity: 0;
+		transition: opacity 1s ease-in-out;
+		}
+        
+    </style>
+</head>
+<body>
+    <div class="menu-container fade-in" id="banner1">
+  <div class="menu-banner">
+    <h1>Underground Infomap</h1>
+  </div>
+  </div>
+    <div id="map" class="fade-in"></div>
+    <div id="overlay">
+    <img id="imag" src="https://www.ltmuseum.co.uk/system/files/2022-12/1992-852.jpg" style="transform: scale(0.8)">
+    </div>
+    <input type="range" class="fade-in" min="0" max="100" value="0" id="opacitySlider">
+    <script>
+        var img = document.getElementById("imag");
+
+        // Get the slider element
+        var slider = document.getElementById("opacitySlider");
+
+        // Set the initial opacity of the image
+        img.style.opacity = slider.value / 100;
+
+        // Add an event listener to the slider
+        slider.addEventListener("input", function() {
+        // Set the opacity of the image to the value of the slider
+        img.style.opacity = slider.value / 100;
+        });
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQQt8trjabz9yVcV94xOX7riph4bljagg" type="text/javascript"></script>
+    <script>
+        var locations = '@ViewData["res"]';
+        locations = JSON.parse(locations);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: new google.maps.LatLng(51.515224, -0.141903),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+        
+        for (i = 0; i < locations.length; i++) {  
+            marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i]["lat"], locations[i]["lon"]),
+            map: map,
+            title: locations[i]["name"]
+            });
+            
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    var dsc = "";
+                    var ln = locations[i]["desc"];
+                    for (j = 0; j < ln.length; j++) {
+                        dsc = dsc.concat("Line: ", ln[j]["LineName"], ", Time: ", ln[j]["ExpectedArrival"], ", Platform: ", ln[j]["PlatformName"], "<br>")
+                    }
+                    infowindow.setContent(dsc);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+
+        var banner1 = document.getElementById('banner1');
+        var map1 = document.getElementById('map');
+        var ops = document.getElementById('opacitySlider');
+
+        // Fade in button 1
+        setTimeout(function() {
+        banner1.style.opacity = '1';
+        }, 500);
+
+        setTimeout(function() {
+        map1.style.opacity = '1';
+        }, 1000);
+
+        setTimeout(function() {
+        ops.style.opacity = '1';
+        }, 1500);
+    </script>
+</body>
+</html>

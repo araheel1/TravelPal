@@ -1,0 +1,147 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Main Menu</title>
+	<style type="text/css">
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		.btn {
+            border-radius: 10px;
+			display: inline-block;
+			position: relative;
+			width: 450px;
+			height: 350px;
+			margin: 0 20px;
+			overflow: hidden;
+			cursor: pointer;
+		}
+		.btn img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform .5s;
+		}
+		.btn:hover img {
+			transform: scale(1.2);
+		}
+		.btn .caption {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			background-color: rgba(0,0,0,.7);
+			color: #fff;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+			transition: bottom .5s;
+		}
+		.btn:hover .caption {
+			bottom: -40px;
+		}
+        body {
+            background-image: url("https://static.vecteezy.com/system/resources/thumbnails/010/355/126/original/lens-flare-bright-afternoon-sun-with-lens-flare-lens-flare-transition-light-effect-lens-flare-effect-on-black-background-light-streaks-lights-optical-lens-flares-free-video.jpg");
+            background-size: cover;
+        }
+        .white-border {
+        border: 5px solid white;
+        }
+		.fade-in {
+		opacity: 0;
+		transition: opacity 1s ease-in-out;
+		}
+		.menu-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		}
+
+		.menu-banner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -20%);
+		background-color: rgba(255, 255, 255, 0.5);
+		padding: 5px;
+		border-radius: 10px;
+		text-align: center;
+		font-family: 'Arial', sans-serif;
+		font-size: 36px;
+		color: #fff;
+		text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+		}
+	</style>
+</head>
+<body>
+	<div class="menu-container fade-in" id="banner1">
+  <div class="menu-banner">
+    <h1>TravelPal Menu</h1>
+  </div>
+  </div>
+	<div class="container">
+		<a id="button1" href="/Main/Tubes" class="btn fade-in" onmouseover="hoverDiv(this)">
+			<img src="https://ichef.bbci.co.uk/news/976/cpsprodpb/70FF/production/_117372982_dtup_exterior_fd_01_jh2-lowerres.jpg" alt="Tube Stations">
+			<div class="caption">Tube Stations</div>
+		</a>
+		<a id="button2" href="/Main/Buses" class="btn fade-in" onmouseover="hoverDiv(this)">
+			<img src="https://scx2.b-cdn.net/gfx/news/2019/whocouldimag.jpg" alt="Bus Tracker">
+			<div class="caption">Bus Tracker</div>
+		</a>
+        <a id="button3" href="/Home/DelaysMenu" class="btn fade-in" onmouseover="hoverDiv(this)">
+			<img src="https://i2-prod.bristolpost.co.uk/news/bristol-news/article2663638.ece/ALTERNATES/s1200/0_b7ec341c-3a3e-4337-b097-18bc1a3deeb4.jpg" alt="Transport Delays">
+			<div class="caption">Transport Delays</div>
+		</a>
+	</div>
+
+    <script>
+  let currentHoveredDiv = null;
+  
+  function hoverDiv(div) {
+    if (currentHoveredDiv !== null) {
+      currentHoveredDiv.classList.remove("white-border");
+    }
+    div.classList.add("white-border");
+    currentHoveredDiv = div;
+  }
+
+  // Get the buttons
+var banner1 = document.getElementById('banner1');
+var button1 = document.getElementById('button1');
+var button2 = document.getElementById('button2');
+var button3 = document.getElementById('button3');
+
+// Fade in button 1
+setTimeout(function() {
+  banner1.style.opacity = '1';
+}, 500);
+
+setTimeout(function() {
+  button1.style.opacity = '1';
+}, 1000);
+
+// Fade in button 2 after button 1
+setTimeout(function() {
+  button2.style.opacity = '1';
+}, 1500);
+
+// Fade in button 3 after button 2
+setTimeout(function() {
+  button3.style.opacity = '1';
+}, 2000);
+
+</script>
+</body>
+</html>

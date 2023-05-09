@@ -1,0 +1,8 @@
+End User Acceptance Tests:
+
+- Bus Tracker: Tracks the real-time location of buses in London. Users can see the live location of buses on a map and get estimated arrival times for bus stops.
+- Tube Status Checker: Provides up-to-date information on the status of London Underground lines. Users can check for any disruptions, planned engineering works, or station closures. The app can also suggest alternative routes and provide estimated travel times.
+- Station Finder: Helps users locate nearby transport stations (tube, bus, DLR, etc.) based on their current location. Users can view station facilities, check live departure times, and get walking directions to the selected station.
+- Live Traffic Updates: Create an app that provides real-time traffic updates for London roads. Users can view congestion levels, road closures, and incidents to help users avoid traffic congestion.
+
+Production time: 2 days

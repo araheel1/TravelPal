@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "vEoOsA+ncmk1v2oILL7NE1sTyI3Jl/+p5bNVFbIho0zwnS2ivZAP2HknedPRpOkkS5tX3Yhr/yJ1YjY6XVKDbQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\adanr\\Desktop\\r2\\TravelPal\\TravelPal.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\adanr\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

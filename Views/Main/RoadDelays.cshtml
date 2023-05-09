@@ -1,0 +1,180 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Traffic Updates</title>
+    
+    <style>
+        .expandable-button {
+            border-radius: 10px;
+            position: relative;
+            display: inline-block;
+            width: 250px;
+            height: 250px;
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: transform .5s;
+        }
+        .btn img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: transform .5s;
+		}
+		.btn .caption {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+			background-color: rgba(0,0,0,.7);
+			color: #fff;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+			transition: bottom .5s;
+		}
+
+        .details {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: rgba(250,250,250,.9);
+            padding: 10px;
+            box-sizing: border-box;
+            transition: top .5s;
+        }
+
+        .expandable-button:hover .details {
+            top: 0;
+        }
+        .white-border {
+        border: 5px solid white;
+        }
+        body {
+            background-image: url("https://static.vecteezy.com/system/resources/thumbnails/010/355/126/original/lens-flare-bright-afternoon-sun-with-lens-flare-lens-flare-transition-light-effect-lens-flare-effect-on-black-background-light-streaks-lights-optical-lens-flares-free-video.jpg");
+            background-size: cover;
+        }
+        @@keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
+        }
+        .fade-in {
+		opacity: 0;
+		transition: opacity 1s;
+        animation: fadein 1s forwards;
+		}
+		.menu-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		}
+
+		.menu-banner {
+		position: relative;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -20%);
+		background-color: rgba(255, 255, 255, 0.5);
+		padding: 5px;
+		border-radius: 10px;
+		text-align: center;
+		font-family: 'Arial', sans-serif;
+		font-size: 12px;
+		color: #fff;
+		text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+		}
+    </style>
+</head>
+<body>
+    <div class="menu-container fade-in">
+  <div class="menu-banner">
+    <h1>Road Delays</h1>
+  </div>
+
+    <script>
+        var closures = '@ViewData["res"]';
+        closures = JSON.parse(closures);
+        for (var i = 0; i < closures.length; i++){
+            makeDivs(closures[i], closures[i]["SubCategory"]);
+        }
+        
+        function makeDivs(locations, captionTxt) {
+
+                    // Create the outer div element
+            var expandableDiv = document.createElement('div');
+            expandableDiv.classList.add('expandable-button');
+            expandableDiv.classList.add('fade-in');
+
+            // Create the button element
+            var button = document.createElement('button');
+            button.classList.add('btn');
+            const img = document.createElement("img");
+            const caption = document.createElement('div');
+            caption.classList.add('caption')
+            caption.innerText = captionTxt;
+
+            // Append the caption to the button
+            fetch(`https://api.unsplash.com/search/photos?query=Road%20${captionTxt}&client_id=KLbjLb4vippWFo_EZruHP0pNIe9x_p1sRdKG8HynS8A`)
+            .then(response => response.json())
+            .then(data => {
+                const imageUrl = data.results[Math.floor(Math.random() * 3)].urls.regular;
+                img.src = imageUrl;
+            })
+            .catch(error => {
+                console.error('Error fetching image:', error);
+            });
+            img.alt = "Button Image";
+
+            button.appendChild(img);
+            button.appendChild(caption);
+
+            // Create the details div element
+            var detailsDiv = document.createElement('div');
+            detailsDiv.classList.add('details');
+            detailsDiv.style.overflowY = 'auto';
+            detailsDiv.style.maxHeight = '200px';
+
+            // Create the unordered list element
+                var lit = document.createElement('p');
+                var dsc = "";
+                dsc = dsc.concat(locations["Comments"])
+                lit.textContent = dsc;
+
+            // Append the paragraph and unordered list to the details div
+            detailsDiv.appendChild(lit);
+
+            // Append the button and details div to the outer div
+            expandableDiv.appendChild(button);
+            expandableDiv.appendChild(detailsDiv);
+            expandableDiv.classList.add('white-border');
+            // Append the outer div to the body of the page
+            
+            document.body.appendChild(expandableDiv);
+        }
+
+        
+    </script>
+</body>
+</html>
